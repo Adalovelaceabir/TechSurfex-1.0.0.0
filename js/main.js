@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    // Optional: Dynamic ticker pause on hover
+    // Ticker pause on hover
     const ticker = document.querySelector('.ticker ul');
     if (ticker) {
         ticker.addEventListener('mouseenter', function() {
@@ -18,5 +18,72 @@ document.addEventListener('DOMContentLoaded', function() {
         ticker.addEventListener('mouseleave', function() {
             this.style.animationPlayState = 'running';
         });
+    }
+    
+    // ========== NEW FEATURES ==========
+    
+    // Dark Mode Toggle
+    const darkToggle = document.getElementById('dark-mode-toggle');
+    if (darkToggle) {
+        // Check localStorage
+        if (localStorage.getItem('darkMode') === 'enabled') {
+            document.body.classList.add('dark-mode');
+            darkToggle.innerHTML = '<i class="fas fa-sun"></i>';
+        }
+        darkToggle.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+            if (document.body.classList.contains('dark-mode')) {
+                localStorage.setItem('darkMode', 'enabled');
+                darkToggle.innerHTML = '<i class="fas fa-sun"></i>';
+            } else {
+                localStorage.setItem('darkMode', 'disabled');
+                darkToggle.innerHTML = '<i class="fas fa-moon"></i>';
+            }
+        });
+    }
+    
+    // Search Modal
+    const searchToggle = document.getElementById('search-toggle');
+    const searchModal = document.getElementById('search-modal');
+    const closeBtns = document.querySelectorAll('.modal-close');
+    
+    if (searchToggle && searchModal) {
+        searchToggle.addEventListener('click', () => {
+            searchModal.classList.add('active');
+            searchModal.querySelector('.search-field').focus();
+        });
+    }
+    
+    // User Modal
+    const userToggle = document.getElementById('user-toggle');
+    const userModal = document.getElementById('user-modal');
+    
+    if (userToggle && userModal) {
+        userToggle.addEventListener('click', () => {
+            userModal.classList.add('active');
+        });
+    }
+    
+    // Close modals
+    closeBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            searchModal?.classList.remove('active');
+            userModal?.classList.remove('active');
+        });
+    });
+    
+    // Click outside modal to close
+    window.addEventListener('click', (e) => {
+        if (e.target === searchModal) searchModal.classList.remove('active');
+        if (e.target === userModal) userModal.classList.remove('active');
+    });
+    
+    // Add Home button explicitly in menu if missing (optional: ensure home link exists)
+    const primaryMenu = document.querySelector('.primary-menu');
+    if (primaryMenu && !primaryMenu.querySelector('.home-link')) {
+        const homeLi = document.createElement('li');
+        homeLi.className = 'home-link';
+        homeLi.innerHTML = '<a href="' + window.location.origin + '">Home</a>';
+        primaryMenu.prepend(homeLi);
     }
 });
