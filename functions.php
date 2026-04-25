@@ -1,6 +1,6 @@
 <?php
 /**
- * TechSurfex Theme Functions
+ * News Portal Theme Functions
  */
 
 // Theme Setup
@@ -16,9 +16,10 @@ function newsportal_setup() {
     ));
     add_theme_support('html5', array('search-form', 'comment-form', 'comment-list', 'gallery', 'caption'));
     
-    // Register Menus
+    // Register Menus (Added 'right' menu)
     register_nav_menus(array(
         'primary' => __('Primary Menu', 'newsportal'),
+        'right'   => __('Right Menu (Header Right Side)', 'newsportal'),
         'footer'  => __('Footer Menu', 'newsportal'),
     ));
 }
@@ -29,7 +30,7 @@ function newsportal_scripts() {
     wp_enqueue_style('newsportal-style', get_stylesheet_uri());
     wp_enqueue_style('font-awesome', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css');
     
-    wp_enqueue_script('newsportal-main', get_template_directory_uri() . '/js/main.js', array(), '1.0.0', true);
+    wp_enqueue_script('newsportal-main', get_template_directory_uri() . '/js/main.js', array(), '2.0.0', true);
 }
 add_action('wp_enqueue_scripts', 'newsportal_scripts');
 
